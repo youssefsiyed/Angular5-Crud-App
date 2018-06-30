@@ -1,0 +1,125 @@
+<h1 class="display-4 text-center">List of Custumers</h1>
+<div class="container">
+
+  <div class="custom-control custom-checkbox float text-center">
+    <input type="checkbox" class="custom-control-input" id="customCheck1" data-md-icheck (change)="toggleVisibility($event)"
+      data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" />
+    <label class="custom-control-label" for="customCheck1">Show/Hide Page Manipulation Posts</label>
+  </div>
+
+  <div *ngIf="showSplice">
+    <div class="row">
+      <div class="col-12">
+        <div class="form group">
+          <span class="badge badge-pill badge-dark">Search By :</span>
+          <br>
+          <input type="text" name="fname" class="form-control" [(ngModel)]="searchSplice" placeholder="Enter the Search Key">
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-3">
+        <div class="form group">
+          <span class="badge badge-pill badge-dark">Filter By :</span>
+          <br>
+          <select class="form-control" id="exampleSelect1" [(ngModel)]="trieSplice">
+            <option value="name">Asc</option>
+            <option value="-name">Desc</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="form group">
+          <span class="badge badge-pill badge-dark">Total Pages {{custumers?.length}}</span>
+          <br>
+          <input type="number" name="fname" class="form-control" [(ngModel)]="page" min="1">
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="form group">
+          <span class="badge badge-pill badge-dark">Items Per Pages</span>
+          <br>
+          <input type="number" name="fname" class="form-control" [(ngModel)]="itemsperpage" min="1" max="10">
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="form group">
+          <span class="badge badge-pill badge-dark">Order By :</span>
+          <br>
+          <select class="form-control" id="exampleSelect1" [(ngModel)]="orderSplice">
+            <option value="name">Name</option>
+            <option value="email">Email</option>
+            <option value="phone">Phone</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-success btn-block" (click)="onCreateCust()">New Custumer</button>
+    </div>
+    <div class="col-2">
+      <button class="btn btn-warning float-right" (click)="onRefresh()">
+        <i class="fas fa-sync-alt"></i>Refresh Data</button>
+    </div>
+  </div>
+</div>
+<br>
+<div class="container-fluid">
+  <!-- <sk-folding-cube *ngIf="!isLoading"></sk-folding-cube> -->
+  <table class="table table-striped">
+    <thead>
+      <th>Id</th>
+      <th>First Name</th>
+      <th>Email</th>
+      <th>Street</th>
+      <th>City</th>
+      <th>Suite</th>
+      <th>Zip Code</th>
+      <th>Phone</th>
+      <th>Web Site</th>
+      <th>Company Name</th>
+      <th>Company Slogo</th>
+      <th>Operations </th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of custumers | filter:searchSplice | orderBy:trieSplice | orderBy: orderSplice  | paginate: { itemsPerPage: itemsperpage, currentPage: page } ">
+        <td>{{user.id}}</td>
+        <td>{{user.name}}</td>
+        <td>
+          <span class="badge badge-dark">{{user.email}}</span>
+        </td>
+        <td>{{user.address.street}}</td>
+        <td>{{user.address.city}}</td>
+        <td>{{user.address.suite}}</td>
+        <td>{{user.address.zipcode}}</td>
+        <td>{{user.phone}}</td>
+        <td>
+          <span class="badge badge-pill badge-dark">{{user.website}}</span>
+        </td>
+        <td>{{user.company.name}}</td>
+        <td>{{user.company.catchPhrase}}</td>
+        <td>
+          <div class=" btn-group " role="group " aria-label="Basic example ">
+            <button class="btn btn-danger btn-lg " (click)="OndeleteCust(user)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+            <button class="btn btn-warning btn-lg " (click)="onUpdateCust(user)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn btn-success btn-lg " (click)="onOneCust(user)">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+  <div class="container text-center">
+    <pagination-controls class="my-pagination" (pageChange)="page = $event"></pagination-controls>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="container">
+  <button class="btn btn-dark btn-block" routerLink="/custumers">Go Back</button>
+</div>
+<br>
+<div class="container-fluid">
+  <div class="card text-center">
+    <div class="card-header">
+      Custumer Details
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{custumers.name}}</h5>
+      <p class="card-text">Phone :{{custumers.phone}}</p>
+      <p class="card-text">Email :{{custumers.email}}</p>
+      <p class="card-text">City :{{custumers.address.city}}</p>
+      <p class="card-text">Street :{{custumers.address.zipcode}}</p>
+    </div>
+    <div class="card-footer text-muted">
+      2 days ago
+    </div>
+  </div>
+</div>
